@@ -1,0 +1,37 @@
+
+networks:
+  web:
+    name: web
+    external: true
+
+services:
+  test:
+    container_name: 'www'
+    image: nginx
+    volumes:
+      - ./src:/usr/share/nginx/html
+      #    build:
+      #context: .
+      #dockerfile: Dockerfilea
+      #    ports:
+      #- 8181:80
+      #    volumes:
+      # - .:/usr/share/nginx/html
+    networks:
+      - web
+    restart: always
+    labels:
+      - "traefik.enable=true"
+        #- "traefik.http.routers.www.rule=Host(`www.33x.me`,`33x.me`)"
+      - "traefik.http.routers.www.rule=Host(`www.flawlessproclean.com`)"
+      - "traefik.http.routers.www.entrypoints=websecure"
+      - "traefik.http.routers.www.tls.certresolver=lets-encrypt"
+      # Connect Middleware matrix well-known with Nextcloud-router
+      #- "traefik.http.routers.www.middlewares=wk_matrix@docker"
+        #- "traefik.http.routers.test.middlewares: rimanda1"
+        #     - "traefik.http.middlewares.rimanda1.replacepathregex.regex=^/.well-known/ca(l|rd)dav"
+        #- "traefik.http.middlewares.rimanda1.replacepathregex.replacement=https://matrix.33x.me/.well-known/matrix/server"
+        #- "traefik.http.middlewares.rimanda1.replacepathregex.replacement=/remote.php/dav/"
+
+ 
+
